@@ -60,7 +60,7 @@
     api_host: "pve-pxs-sm2u-r5-33"
     node: "{{ proxmox_node }}" 
     vmid: "200"
-    name: "VM_ubuntu_24_04"
+    name: "vm-ubuntu-24-04"
     ostype: l26
     cores: "{{ cpu_cores }}"
     net:
