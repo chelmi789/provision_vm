@@ -1,0 +1,30 @@
+---
+# vars file for provision_vm
+# vars/main.yml
+vm_name: "ubuntu24"
+vm_id: 100
+node: "pve-pxs-sm2u-r5-33"
+datastore: "local-lvm"
+iso: "local:iso/ubuntu-24.04-autoinstall.iso"
+memory: 2048
+cores: 2
+disks:
+  - size: "30G"
+    type: "scsi"
+    storage: "local-lvm"
+    vmid: "{{ vm_id }}"
+    name: "home"
+  - size: "50G"
+    type: "scsi"
+    storage: "local-lvm"
+    vmid: "{{ vm_id }}"
+    name: "root"
+  - size: "20G"
+    type: "scsi"
+    storage: "local-lvm"
+    vmid: "{{ vm_id }}"
+    name: "opt"
+network:
+  bridge: "vmbr0"
+  vlan: 100
+firewall: false

@@ -1,0 +1,53 @@
+---
+# tasks file for provision_vm
+# tasks/main.yml
+- name: Create VM {{ vm_name }}
+  community.general.proxmox_kvm:
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    node: "{{ node }}"
+    vmid: "{{ vm_id }}"
+    name: "{{ vm_name }}"
+    memory: "{{ memory }}"
+    cores: "{{ cores }}"
+    scsihw: "virtio-scsi-pci"
+    boot: "cdn"
+    ide:
+      ide0: "{{ iso }},media=cdrom" 
+    ostype: "l26"
+    net:
+      net0: "model=virtio,bridge={{ network.bridge }},tag={{ network.vlan }}"
+    state: present
+  delegate_to: localhost
+
+- name: Generate SCSI mapping
+  set_fact:
+    scsi_map: >-
+      {{
+        dict(
+          ('scsi' ~ index|string, disk.storage ~ ':' ~ disk.size)
+          for index, disk in disks | enumerate
+        )
+      }}
+
+- name: Add disks to VM
+  community.general.proxmox_kvm:
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    node: "{{ node }}"
+    vmid: "{{ vm_id }}"
+    scsi: "{{ scsi_map }}"
+    state: present
+  delegate_to: localhost
+
+- name: Start VM {{ vm_name }}
+  community.general.proxmox_kvm:
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    node: "{{ node }}"
+    vmid: "{{ vm_id }}"
+    state: started
+  delegate_to: localhost
