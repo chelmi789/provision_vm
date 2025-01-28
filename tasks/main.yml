@@ -56,7 +56,7 @@
 - name: Create VM
   community.general.proxmox_kvm:
     api_user: "root@pam"
-    api_password: "ixelles1050"
+    api_password: "Ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     node: "{{ proxmox_node }}" 
     vmid: "200"
@@ -82,7 +82,7 @@
 - name: Create root disk
   community.general.proxmox_disk:
       api_user: "root@pam"
-      api_password: "ixelles1050"
+      api_password: "Ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
       vmid: "200"
       disk: "virtio0"
@@ -95,7 +95,7 @@
 - name: Create home disk
   community.general.proxmox_disk:
     api_user: "root@pam"
-    api_password: "ixelles1050"
+    api_password: "Ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     disk: "virtio1"
@@ -107,7 +107,7 @@
 - name: Create opt disk
   community.general.proxmox_disk:
     api_user: "root@pam"
-    api_password: "ixelles1050"
+    api_password: "Ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     disk: "virtio2"
@@ -119,7 +119,7 @@
 - name: Set boot order
   community.general.proxmox_kvm:
     api_user: "root@pam"
-    api_password: "ixelles1050"
+    api_password: "Ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     node: "pve-pxs-sm2u-r5-33"
@@ -128,7 +128,7 @@
 - name: Start VM
   community.general.proxmox_kvm:
     api_user: "root@pam"
-    api_password: "ixelles1050"
+    api_password: "Ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     state: started
