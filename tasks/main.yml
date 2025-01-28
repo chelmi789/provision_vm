@@ -64,7 +64,7 @@
     ostype: l26
     cores: "{{ cpu_cores }}"
     net:
-      net0: 'virtio,bridge={{ network_bridge }},tag={{ vlan }}'
+      net0: 'virtio,bridge={{ network_bridge }},tag=10'
     memory: "{{ memory }}"
     state: present
 
