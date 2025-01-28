@@ -55,8 +55,8 @@
 
 - name: Create VM
   community.general.proxmox_kvm:
-    api_user: "root@pam"
-    api_password: "Ixelles1050"
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     node: "{{ proxmox_node }}" 
     vmid: "200"
@@ -64,8 +64,14 @@
     ostype: l26
     cores: "{{ cpu_cores }}"
     net:
-      net0: 'virtio,bridge={{ network_bridge }},tag=10'
+      net0: 'virtio,bridge=vmbr0,tag=508'
     memory: "{{ memory }}"
+    disk:
+      - storage: "local-lvm"  # Replace with your storage pool
+        size: "50G"           # Disk size in GB
+        format: raw           # Disk format (raw for LVM-thin)
+    ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"  # Attach ISO as CD-ROM
+    boot: "order=ide2;net0"  # Boot from ISO first, then network
     state: present
 
 #- name: Create root disk
@@ -81,8 +87,8 @@
 
 - name: Create root disk
   community.general.proxmox_disk:
-      api_user: "root@pam"
-      api_password: "Ixelles1050"
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
       vmid: "200"
       disk: "virtio0"
@@ -94,8 +100,8 @@
 
 - name: Create home disk
   community.general.proxmox_disk:
-    api_user: "root@pam"
-    api_password: "Ixelles1050"
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     disk: "virtio1"
@@ -106,8 +112,8 @@
 
 - name: Create opt disk
   community.general.proxmox_disk:
-    api_user: "root@pam"
-    api_password: "Ixelles1050"
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     disk: "virtio2"
@@ -118,8 +124,8 @@
 
 - name: Set boot order
   community.general.proxmox_kvm:
-    api_user: "root@pam"
-    api_password: "Ixelles1050"
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     node: "pve-pxs-sm2u-r5-33"
@@ -127,8 +133,8 @@
 
 - name: Start VM
   community.general.proxmox_kvm:
-    api_user: "root@pam"
-    api_password: "Ixelles1050"
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     state: started
