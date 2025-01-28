@@ -84,7 +84,7 @@
       api_user: "root@pam"
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
-      vmid: 100
+      vmid: 200
       disk: "virtio0"
       size: "50"  # Disk size in GB as a string (no units)
       storage: "local-lvm"  # Use your LVM-thin pool name
@@ -97,7 +97,7 @@
     api_user: "root@pam"
     api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
-    vmid: "100"
+    vmid: 200
     disk: "virtio1"
     size: "30"
     storage: "local-lvm"
@@ -109,7 +109,7 @@
     api_user: "root@pam"
     api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
-    vmid: "100"
+    vmid: 200
     disk: "virtio2"
     size: "20"
     storage: "local-lvm"
@@ -122,6 +122,7 @@
     api_password: "{{ proxmox_api_password }}"
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
+    node: "{{ proxmox_node }}"
     boot: order=virtio0;virtio1;virtio2
 
 - name: Start VM
