@@ -55,9 +55,9 @@
 
 - name: Create VM
   community.general.proxmox_kvm:
-    api_user: "{{ proxmox_api_user }}"
-    api_password: "{{ proxmox_api_password }}"
-    api_host: "{{ proxmox_api_host }}"
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
     node: "{{ proxmox_node }}" 
     vmid: "200"
     name: "VM_ubuntu_24_04"
