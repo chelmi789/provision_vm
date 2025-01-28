@@ -75,7 +75,7 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio0"
-    size: "{{ root_disk_size }}"
+    size: "50G"
     storage: "{{ storage_pool }}"
     format: raw
 
@@ -86,7 +86,7 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio1"
-    size: "{{ home_disk_size }}"
+    size: "30G"
     storage: "{{ storage_pool }}"
     format: raw
 
@@ -97,7 +97,7 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio2"
-    size: "{{ opt_disk_size }}"
+    size: "20G"
     storage: "{{ storage_pool }}"
     format: raw
 
