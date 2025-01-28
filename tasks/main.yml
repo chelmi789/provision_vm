@@ -138,7 +138,6 @@
     api_user: "ansible@pam"
     api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
-    node: "{{ proxmox_node }}"
     vmid: "200"
     disk: "scsi0"
     size: "50G"  # Replace with desired disk size
