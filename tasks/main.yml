@@ -68,16 +68,29 @@
     memory: "{{ memory }}"
     state: present
 
+#- name: Create root disk
+ # community.general.proxmox_disk:
+  #  api_user: "{{ proxmox_api_user }}"
+  #  api_password: "{{ proxmox_api_password }}"
+  #  api_host: "{{ proxmox_api_host }}"
+  #  vmid: "{{ vm_id }}"
+  #  disk: "virtio0"
+  #  size: "local-lvm:50G"
+  #  format: raw
+  #  state: present
+
 - name: Create root disk
   community.general.proxmox_disk:
-    api_user: "{{ proxmox_api_user }}"
-    api_password: "{{ proxmox_api_password }}"
-    api_host: "{{ proxmox_api_host }}"
-    vmid: "{{ vm_id }}"
-    disk: "virtio0"
-    size: "local-lvm:50G"
-    format: raw
-    state: present
+      api_user: "root@pam"
+      api_password: "your_password"
+      api_host: "proxmox.example.com"
+      vmid: 100
+      disk: "virtio0"
+      size: "50"  # Disk size in GB as a string (no units)
+      storage: "local-lvm"  # Use your LVM-thin pool name
+      format: raw  # Optional, default is raw for LVM-thin pools
+      state: present
+
 
 - name: Create home disk
   community.general.proxmox_disk:
