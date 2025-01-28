@@ -75,7 +75,7 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio0"
-    size: "{{ storage_pool }}:50G"
+    size: "local-lvm:50"
     format: raw
     state: present
 
@@ -86,7 +86,7 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio1"
-    size: "{{ storage_pool }}:30G"
+    size: "local-lvm:30"
     format: raw
     state: present
 
@@ -97,7 +97,7 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio2"
-    size: "{{ storage_pool }}:20G"
+    size: "local-lvm:20"
     format: raw
     state: present
 
