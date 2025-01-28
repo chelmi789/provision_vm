@@ -75,9 +75,9 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio0"
-    size: "50G"
-    storage: "{{ storage_pool }}"
+    size: "{{ storage_pool }}:50G"
     format: raw
+    state: present
 
 - name: Create home disk
   community.general.proxmox_disk:
@@ -86,9 +86,9 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio1"
-    size: "30G"
-    storage: "{{ storage_pool }}"
+    size: "{{ storage_pool }}:30G"
     format: raw
+    state: present
 
 - name: Create opt disk
   community.general.proxmox_disk:
@@ -97,9 +97,9 @@
     api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     disk: "virtio2"
-    size: "20G"
-    storage: "{{ storage_pool }}"
+    size: "{{ storage_pool }}:20G"
     format: raw
+    state: present
 
 - name: Set boot order
   community.general.proxmox_kvm:
