@@ -70,7 +70,7 @@
     state: present
 
 - name: Create root disk
-  proxmox_disk:
+  community.general.proxmox_disk:
     api_user: "{{ proxmox_api_user }}"
     api_password: "{{ proxmox_api_password }}"
     api_host: "{{ proxmox_api_host }}"
@@ -81,7 +81,7 @@
     format: raw
 
 - name: Create home disk
-  proxmox_disk:
+  community.general.proxmox_disk:
     api_user: "{{ proxmox_api_user }}"
     api_password: "{{ proxmox_api_password }}"
     api_host: "{{ proxmox_api_host }}"
@@ -92,7 +92,7 @@
     format: raw
 
 - name: Create opt disk
-  proxmox_disk:
+  community.general.proxmox_disk:
     api_user: "{{ proxmox_api_user }}"
     api_password: "{{ proxmox_api_password }}"
     api_host: "{{ proxmox_api_host }}"
