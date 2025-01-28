@@ -55,12 +55,12 @@
 
 - name: Create VM
   community.general.proxmox_kvm:
-    api_user: "{{ proxmox_api_user }}"
-    api_password: "{{ proxmox_api_password }}"
-    api_host: "{{ proxmox_api_host }}"
-    node: "{{ proxmox_node }}"
-    vmid: "{{ vm_id }}"
-    name: "{{ vm_name }}"
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    node: "pve-pxs-sm2u-r5-33"
+    vmid: "200"
+    name: "VM_ubuntu_24_04"
     ostype: l26
     cores: "{{ cpu_cores }}"
     net:
@@ -84,7 +84,7 @@
       api_user: "root@pam"
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
-      vmid: 200
+      vmid: "200"
       disk: "virtio0"
       size: "50"  # Disk size in GB as a string (no units)
       storage: "local-lvm"  # Use your LVM-thin pool name
@@ -97,7 +97,7 @@
     api_user: "root@pam"
     api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
-    vmid: 200
+    vmid: "200"
     disk: "virtio1"
     size: "30"
     storage: "local-lvm"
@@ -109,7 +109,7 @@
     api_user: "root@pam"
     api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
-    vmid: 200
+    vmid: "200"
     disk: "virtio2"
     size: "20"
     storage: "local-lvm"
@@ -118,18 +118,18 @@
 
 - name: Set boot order
   community.general.proxmox_kvm:
-    api_user: "{{ proxmox_api_user }}"
-    api_password: "{{ proxmox_api_password }}"
-    api_host: "{{ proxmox_api_host }}"
-    vmid: "{{ vm_id }}"
-    node: "{{ proxmox_node }}"
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    vmid: "200"
+    node: "pve-pxs-sm2u-r5-33"
     boot: order=virtio0;virtio1;virtio2
 
 - name: Start VM
   community.general.proxmox_kvm:
-    api_user: "{{ proxmox_api_user }}"
-    api_password: "{{ proxmox_api_password }}"
-    api_host: "{{ proxmox_api_host }}"
-    vmid: "{{ vm_id }}"
+    api_user: "root@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    vmid: "200"
     state: started
 
