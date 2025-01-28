@@ -1,30 +1,36 @@
 ---
 # vars file for provision_vm
 # vars/main.yml
-vm_name: "ubuntu24"
-vm_id: 100
-node: "pve-pxs-sm2u-r5-33"
-datastore: "local-lvm"
-iso: "local:iso/ubuntu-24.04-autoinstall.iso"
-memory: 2048
-cores: 2
-disks:
-  - size: "30G"
-    type: "scsi"
-    storage: "local-lvm"
-    vmid: "{{ vm_id }}"
-    name: "home"
-  - size: "50G"
-    type: "scsi"
-    storage: "local-lvm"
-    vmid: "{{ vm_id }}"
-    name: "root"
-  - size: "20G"
-    type: "scsi"
-    storage: "local-lvm"
-    vmid: "{{ vm_id }}"
-    name: "opt"
-network:
-  bridge: "vmbr0"
-  vlan: 100
-firewall: false
+#vm_name: "ubuntu24"
+#vm_id: 100
+#node: "pve-pxs-sm2u-r5-33"
+#datastore: "local-lvm"
+#iso: "local:iso/ubuntu-24.04-autoinstall.iso"
+#memory: 2048
+#cores: 2
+#disks:
+ # - size: "30G"
+  #  type: "scsi"
+  #  storage: "local-lvm"
+  #  vmid: "{{ vm_id }}"
+  #  name: "home"
+ # - size: "50G"
+  #  type: "scsi"
+  #  storage: "local-lvm"
+  #  vmid: "{{ vm_id }}"
+  #  name: "root"
+ # - size: "20G"
+  #  type: "scsi"
+  #  storage: "local-lvm"
+  #  vmid: "{{ vm_id }}"
+  #  name: "opt"
+#network:
+ # bridge: "vmbr0"
+ # vlan: 100
+#firewall: false
+
+proxmox_api_user: "root@pam"
+proxmox_api_password: "ixelles1050"
+proxmox_api_host: "pve-pxs-sm2u-r5-33"
+proxmox_node: "pve-pxs-sm2u-r5-33"
+

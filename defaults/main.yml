@@ -1,2 +1,13 @@
 ---
 # defaults file for provision_vm
+
+vm_name: ubuntu_24_04
+vm_id: 100
+cpu_cores: 2
+memory: 4096
+storage_pool: local-lvm
+network_bridge: vmbr0
+vlan: test
+root_disk_size: "50G"
+home_disk_size: "30G"
+opt_disk_size: "20G"

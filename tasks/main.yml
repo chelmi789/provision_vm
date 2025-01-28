@@ -1,53 +1,119 @@
 ---
 # tasks file for provision_vm
 # tasks/main.yml
-- name: Create VM {{ vm_name }}
-  community.general.proxmox_kvm:
-    api_user: "root@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    node: "{{ node }}"
+#- name: Create VM {{ vm_name }}
+ # community.general.proxmox_kvm:
+  #  api_user: "root@pam"
+   # api_password: "ixelles1050"
+    #api_host: "pve-pxs-sm2u-r5-33"
+    #node: "{{ node }}"
+    #vmid: "{{ vm_id }}"
+    #name: "{{ vm_name }}"
+    #memory: "{{ memory }}"
+    #cores: "{{ cores }}"
+    #scsihw: "virtio-scsi-pci"
+    #boot: "cdn"
+    #ide:
+     # ide0: "{{ iso }},media=cdrom" 
+    #ostype: "l26"
+    #net:
+     # net0: "model=virtio,bridge={{ network.bridge }},tag={{ network.vlan }}"
+   # state: present
+  #delegate_to: localhost
+
+#- name: Generate SCSI mapping
+ # set_fact:
+  #  scsi_map: >-
+   #   {{
+    #    dict(
+     #     ('scsi' ~ index|string, disk.storage ~ ':' ~ disk.size)
+      #    for index, disk in disks | enumerate
+     #   )
+     # }}
+
+#- name: Add disks to VM
+ # community.general.proxmox_kvm:
+  #  api_user: "root@pam"
+   # api_password: "ixelles1050"
+    #api_host: "pve-pxs-sm2u-r5-33"
+    #node: "{{ node }}"
+    #vmid: "{{ vm_id }}"
+    #scsi: "{{ scsi_map }}"
+    #state: present
+  #delegate_to: localhost
+
+#- name: Start VM {{ vm_name }}
+ # community.general.proxmox_kvm:
+  #  api_user: "root@pam"
+   # api_password: "ixelles1050"
+    #api_host: "pve-pxs-sm2u-r5-33"
+   # node: "{{ node }}"
+    #vmid: "{{ vm_id }}"
+    #state: started
+ # delegate_to: localhost
+
+
+- name: Create VM
+  proxmox_kvm:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    api_host: "{{ proxmox_api_host }}"
+    node: "{{ proxmox_node }}"
     vmid: "{{ vm_id }}"
     name: "{{ vm_name }}"
+    ostype: l26
+    cores: "{{ cpu_cores }}"
     memory: "{{ memory }}"
-    cores: "{{ cores }}"
-    scsihw: "virtio-scsi-pci"
-    boot: "cdn"
-    ide:
-      ide0: "{{ iso }},media=cdrom" 
-    ostype: "l26"
-    net:
-      net0: "model=virtio,bridge={{ network.bridge }},tag={{ network.vlan }}"
+    net0: "virtio,bridge={{ network_bridge }},tag={{ vlan }}"
+    vlan: "{{ vlan }}"
+    firewall: false
     state: present
-  delegate_to: localhost
 
-- name: Generate SCSI mapping
-  set_fact:
-    scsi_map: >-
-      {{
-        dict(
-          ('scsi' ~ index|string, disk.storage ~ ':' ~ disk.size)
-          for index, disk in disks | enumerate
-        )
-      }}
-
-- name: Add disks to VM
-  community.general.proxmox_kvm:
-    api_user: "root@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    node: "{{ node }}"
+- name: Create root disk
+  proxmox_disk:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
-    scsi: "{{ scsi_map }}"
-    state: present
-  delegate_to: localhost
+    disk: "virtio0"
+    size: "{{ root_disk_size }}"
+    storage: "{{ storage_pool }}"
+    format: raw
 
-- name: Start VM {{ vm_name }}
-  community.general.proxmox_kvm:
-    api_user: "root@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    node: "{{ node }}"
+- name: Create home disk
+  proxmox_disk:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    api_host: "{{ proxmox_api_host }}"
+    vmid: "{{ vm_id }}"
+    disk: "virtio1"
+    size: "{{ home_disk_size }}"
+    storage: "{{ storage_pool }}"
+    format: raw
+
+- name: Create opt disk
+  proxmox_disk:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    api_host: "{{ proxmox_api_host }}"
+    vmid: "{{ vm_id }}"
+    disk: "virtio2"
+    size: "{{ opt_disk_size }}"
+    storage: "{{ storage_pool }}"
+    format: raw
+
+- name: Set boot order
+  proxmox_kvm:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    api_host: "{{ proxmox_api_host }}"
+    vmid: "{{ vm_id }}"
+    boot: order=virtio0;virtio1;virtio2
+
+- name: Start VM
+  proxmox_kvm:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_password }}"
+    api_host: "{{ proxmox_api_host }}"
     vmid: "{{ vm_id }}"
     state: started
-  delegate_to: localhost
