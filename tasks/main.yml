@@ -82,8 +82,8 @@
 - name: Create root disk
   community.general.proxmox_disk:
       api_user: "root@pam"
-      api_password: "your_password"
-      api_host: "proxmox.example.com"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
       vmid: 100
       disk: "virtio0"
       size: "50"  # Disk size in GB as a string (no units)
