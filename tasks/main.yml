@@ -119,11 +119,12 @@
     scsihw: virtio-scsi-pci
     net:
       net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
-    ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+    storage: "local-lvm"
     boot: "order=ide2;virtio0;net0"
-    disk:
-      - virtio0: "local-lvm:10G"  # Example for a 10GB disk
+    ide:
+      ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
     state: present
+
 
 
 - name: Création des disques virtuels
