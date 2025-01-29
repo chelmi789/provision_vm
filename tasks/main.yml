@@ -133,11 +133,12 @@
     vmid: "200"
     state: started
 
+
 - name: Create logical volume
-  community.general.lvol:
-    vg: pve
-    lv: vm-200-disk-3
-    size: 50G  # Adjust the size as needed
+  ansible.builtin.command:
+      cmd: lvcreate -L 50G -n vm-200-disk-3 pve
+  Become: yes
+  
     
 
 - name: Attach root disk to VM
