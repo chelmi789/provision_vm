@@ -142,7 +142,7 @@
     api_host: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     disk: "scsi0"
-    size: "50G"  # Replace with desired disk size
+    size: "50000"  # Replace with desired disk size
     storage: "local-lvm"  # Replace with your storage pool
     format: raw
     state: present
