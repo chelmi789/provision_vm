@@ -102,8 +102,8 @@
    # media_type: cdrom
    # state: present
 
-      - name: Création de la VM
-        community.general.proxmox_kvm:
+- name: Création de la VM
+  community.general.proxmox_kvm:
           api_user: "ansible@pam"
           api_password: "ixelles1050"
           api_host: "pve-pxs-sm2u-r5-33"
@@ -125,12 +125,12 @@
           iso_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"
     
 
-      - name: Création des disques virtuels
-        loop:
+- name: Création des disques virtuels
+  loop:
           - { id: "0", size: "50G" }
           - { id: "1", size: "30G" }
           - { id: "2", size: "20G" }
-        community.general.proxmox_disk:
+  community.general.proxmox_disk:
           api_user: "{{ api_user }}"
           api_password: "{{ api_password }}"
           api_host: "{{ proxmox_host }}"
@@ -143,8 +143,8 @@
           loop_control:
           loop_var: item
 
-      - name: Attacher ISO comme lecteur CD-ROM
-        community.general.proxmox_kvm:
+- name: Attacher ISO comme lecteur CD-ROM
+  community.general.proxmox_kvm:
           api_user: "{{ api_user }}"
           api_password: "{{ api_password }}"
           api_host: "{{ proxmox_host }}"
@@ -154,8 +154,8 @@
             ide2: "local:{{ iso_path }},media=cdrom"
             state: present
 
-      - name: Démarrer la VM
-        community.general.proxmox_kvm:
+- name: Démarrer la VM
+  community.general.proxmox_kvm:
           api_user: "{{ api_user }}"
           api_password: "{{ api_password }}"
           api_host: "{{ proxmox_host }}"
