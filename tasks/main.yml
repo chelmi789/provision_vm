@@ -134,7 +134,10 @@
     vmid: "200"
     state: started
 
-
+- name: Create logical volume
+  ansible.builtin.command:
+     cmd: lvcreate -L 50G -n vm-200-disk-3 pve
+  become: yes
 
   
     
@@ -169,7 +172,4 @@
     state: present
 
 
-- name: Create logical volume
-  ansible.builtin.command:
-     cmd: lvcreate -L 50G -n vm-200-disk-3 pve
-  become: yes
+
