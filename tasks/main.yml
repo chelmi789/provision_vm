@@ -16,42 +16,6 @@
 
 
 
-#- name: Create root disk
- # community.general.proxmox_disk:
-  #    api_user: "ansible@pam"
-  #    api_password: "ixelles1050"
-  #    api_host: "pve-pxs-sm2u-r5-33"
-  #    vmid: "200"
-  #    disk: "virtio0"
-  #    size: "50"  # Disk size in GB as a string (no units)
-  #    storage: "local-lvm"  # Use your LVM-thin pool name
-  #    format: raw  # Optional, default is raw for LVM-thin pools
-  #    state: present
-
-
-#- name: Create home disk
- # community.general.proxmox_disk:
-  #  api_user: "ansible@pam"
-   # api_password: "ixelles1050"
-   # api_host: "pve-pxs-sm2u-r5-33"
-   # vmid: "200"
-   # disk: "virtio1"
-   # size: "30"
-   # storage: "local-lvm"
-   # format: raw
-   # state: present
-
-#- name: Create opt disk
- # community.general.proxmox_disk:
-  #  api_user: "ansible@pam"
-   # api_password: "ixelles1050"
-    #api_host: "pve-pxs-sm2u-r5-33"
-    #vmid: "200"
-    #disk: "virtio2"
-    #size: "20"
-    #storage: "local-lvm"
-    #format: raw
-    #state: present
 
 #- name: Set boot order
  # community.general.proxmox_kvm:
@@ -130,6 +94,42 @@
     state: present
 
 
+- name: Create root disk
+  community.general.proxmox_disk:
+     api_user: "ansible@pam"
+     api_password: "ixelles1050"
+     api_host: "pve-pxs-sm2u-r5-33"
+     vmid: "150"
+     disk: "virtio0"
+     size: "50"  # Disk size in GB as a string (no units)
+     storage: "local-lvm"  # Use your LVM-thin pool name
+     format: raw  # Optional, default is raw for LVM-thin pools
+     state: present
+
+
+- name: Create home disk
+  community.general.proxmox_disk:
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    vmid: "150"
+    disk: "virtio1"
+    size: "30"
+    storage: "local-lvm"
+    format: raw
+    state: present
+
+- name: Create opt disk
+  community.general.proxmox_disk:
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    vmid: "150"
+    disk: "virtio2"
+    size: "20"
+    storage: "local-lvm"
+    format: raw
+    state: present
 
 - name: Attacher ISO comme lecteur CD-ROM
   community.general.proxmox_kvm:
