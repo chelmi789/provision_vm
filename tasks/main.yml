@@ -142,6 +142,11 @@
             ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
             state: present
 
+- name: Attendre avant de démarrer la VM
+  ansible.builtin.pause:
+    seconds: 10
+
+  
 - name: Démarrer la VM
   community.general.proxmox_kvm:
           api_user: "ansible@pam"
@@ -150,4 +155,12 @@
           vmid: "150"
           state: started
 
-
+- name: Mettre à jour l'ordre de démarrage après installation
+  community.general.proxmox_kvm:
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    node: "{{ proxmox_node }}"
+    vmid: "150"
+    boot: "order=virtio0;net0"  # Boot sur le disque principal après installation
+    state: present
