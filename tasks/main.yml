@@ -133,13 +133,13 @@
 
 - name: Attacher ISO comme lecteur CD-ROM
   community.general.proxmox_kvm:
-          api_user: "{{ api_user }}"
-          api_password: "{{ api_password }}"
-          api_host: "{{ proxmox_host }}"
+          api_user: "ansible@pam"
+          api_password: "ixelles1050"
+          api_host: "pve-pxs-sm2u-r5-33"
           node: "{{ proxmox_node }}"
-          vmid: "{{ vmid }}"
+          vmid: "150"
           ide:
-            ide2: "local:{{ iso_path }},media=cdrom"
+            ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
             state: present
 
 - name: Démarrer la VM
