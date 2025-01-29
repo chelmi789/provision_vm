@@ -104,26 +104,27 @@
 
 - name: Création de la VM
   community.general.proxmox_kvm:
-          api_user: "ansible@pam"
-          api_password: "ixelles1050"
-          api_host: "pve-pxs-sm2u-r5-33"
-          node: "{{ proxmox_node }}"
-          vmid: "150"
-          name: "VM-ubuntu2404"
-          ostype: l26
-          cores: "{{ cpu_cores }}"
-          sockets: 2
-          memory: "{{memory}}"
-          bios: seabios
-          machine: q35
-          scsihw: virtio-scsi-pci
-          net:
-            net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
-          state: present
-          storage_pool: "local-lvm"
-          boot_order: "ide2;virtio0;net0"
-          iso_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"
-    
+    api_user: "ansible@pam"
+    api_password: "ixelles1050"
+    api_host: "pve-pxs-sm2u-r5-33"
+    node: "{{ proxmox_node }}"
+    vmid: "150"
+    name: "VM-ubuntu2404"
+    ostype: l26
+    cores: "{{ cpu_cores }}"
+    sockets: 2
+    memory: "{{ memory }}"
+    bios: seabios
+    machine: q35
+    scsihw: virtio-scsi-pci
+    net:
+      net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
+    ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+    boot: "order=ide2;virtio0;net0"
+    disk:
+      - virtio0: "local-lvm:10G"  # Example for a 10GB disk
+    state: present
+
 
 - name: Création des disques virtuels
   loop:
