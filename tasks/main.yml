@@ -140,15 +140,17 @@
     api_user: "ansible@pam"
     api_password: "ixelles1050"
     api_host: "pve-pxs-sm2u-r5-33"
-    ansible.builtin.command:
-      cmd: qm set 200 --scsi0 local-lvm:50
-    delegate_to: "pve-pxs-sm2u-r5-33"
     vmid: "200"
     disk: "scsi0"
-    size: "50000000000"  # Replace with desired disk size
+    size: "50G"  # Replace with desired disk size
     storage: "local-lvm"  # Replace with your storage pool
     format: raw
     state: present
+
+- name: Set VM disk using qm command
+  ansible.builtin.command:
+    cmd: qm set 200 --scsi0 local-lvm:50
+  delegate_to: "pve-pxs-sm2u-r5-33"
 
 
 - name: Attach ISO as CD-ROM
