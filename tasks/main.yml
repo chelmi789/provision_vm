@@ -102,43 +102,28 @@
    # media_type: cdrom
    # state: present
 
-- name: Création d'une VM Ubuntu 24.04 sur Proxmox
-  community.general.proxmox_kvm:
-    hosts: localhost
-    gather_facts: no
-    vars:
-      proxmox_host: "pve-pxs-sm2u-r5-33"
-      api_user: "ansible@pam"
-      api_password: "ixelles1050"
-      vmid: 200
-      vm_name: "vm-ubuntu-24-04"
-      proxmox_node: "pve-pxs-sm2u-r5-33"
-      memory: 4096
-      cpu_cores: 4
-      storage_pool: "local-lvm"
-      boot_order: "ide2;virtio0;net0"
-      iso_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"
-    
-    tasks:
       - name: Création de la VM
         community.general.proxmox_kvm:
-          api_user: "{{ api_user }}"
-          api_password: "{{ api_password }}"
-          api_host: "{{ proxmox_host }}"
+          api_user: "ansible@pam"
+          api_password: "ixelles1050"
+          api_host: "pve-pxs-sm2u-r5-33"
           node: "{{ proxmox_node }}"
-          vmid: "{{ vmid }}"
-          name: "{{ vm_name }}"
+          vmid: "150"
+          name: "VM-ubuntu2404"
           ostype: l26
           cores: "{{ cpu_cores }}"
           sockets: 2
-          memory: "{{ memory }}"
+          memory: "{{memory}}"
           bios: seabios
           machine: q35
           scsihw: virtio-scsi-pci
-          boot: "{{ boot_order }}"
           net:
             net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
           state: present
+          storage_pool: "local-lvm"
+          boot_order: "ide2;virtio0;net0"
+          iso_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"
+    
 
       - name: Création des disques virtuels
         loop:
