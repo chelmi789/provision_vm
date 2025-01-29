@@ -131,24 +131,6 @@
 
 
 
-- name: Création des disques virtuels
-  loop:
-          - { id: "0", size: "50G" }
-          - { id: "1", size: "30G" }
-          - { id: "2", size: "20G" }
-  community.general.proxmox_disk:
-          api_user: "{{ api_user }}"
-          api_password: "{{ api_password }}"
-          api_host: "{{ proxmox_host }}"
-          vmid: "{{ vmid }}"
-          disk: "virtio{{ item.id }}"
-          size: "{{ item.size }}"
-          storage: "{{ storage_pool }}"
-          format: raw
-          state: present
-          loop_control:
-          loop_var: item
-
 - name: Attacher ISO comme lecteur CD-ROM
   community.general.proxmox_kvm:
           api_user: "{{ api_user }}"
