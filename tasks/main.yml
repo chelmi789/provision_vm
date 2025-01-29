@@ -134,10 +134,11 @@
     state: started
 
 - name: Create logical volume
-  lvol:
+  community.general.lvol:
     vg: pve
     lv: vm-200-disk-3
     size: 50G  # Adjust the size as needed
+    become: yes
 
 - name: Attach root disk to VM
   community.general.proxmox_disk:
