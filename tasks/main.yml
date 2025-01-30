@@ -103,7 +103,7 @@
      disk: "virtio0"
      size: "50"  # Disk size in GB as a string (no units)
      storage: "local-lvm"  # Use your LVM-thin pool name
-     format: raw  # Optional, default is raw for LVM-thin pools
+     format: qcow2  # Optional, default is raw for LVM-thin pools
      state: present
 
 
@@ -116,7 +116,7 @@
     disk: "virtio1"
     size: "30"
     storage: "local-lvm"
-    format: raw
+    format: qcow2
     state: present
 
 - name: Create opt disk
@@ -128,7 +128,7 @@
     disk: "virtio2"
     size: "20"
     storage: "local-lvm"
-    format: raw
+    format: qcow2
     state: present
 
 - name: Attacher ISO comme lecteur CD-ROM
