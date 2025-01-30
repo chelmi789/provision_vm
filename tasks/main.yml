@@ -84,7 +84,7 @@
     scsihw: virtio-scsi-pci
     net:
       net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
-    storage: "local"
+    storage: "local-lvm"
     boot: "order=ide2;virtio0;net0"
     ide:
       ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
@@ -103,7 +103,7 @@
      vmid: "151"
      disk: "virtio0"
      size: "50"  # Disk size in GB as a string (no units)
-     storage: "local-lvm"  # Use your LVM-thin pool name
+     storage: "local"  # Use your LVM-thin pool name
      format: qcow2  # Optional, default is raw for LVM-thin pools
      state: present
 
