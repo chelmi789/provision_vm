@@ -73,7 +73,7 @@
     api_host: "pve-pxs-sm2u-r5-33"
     node: "{{ proxmox_node }}"
     vmid: "151"
-    name: "VM-ubuntu2404"
+    name: "VM-ubuntu24-04"
     ostype: l26
     cores: 4
     sockets: 2
@@ -88,9 +88,9 @@
     ide:
       ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
     virtio:
-      virtio0: "local:50G,format=qcow2"  # Root disk (50GB)
-      virtio1: "local:30G,format=qcow2"  # Home disk (30GB)
-      virtio2: "local:20G,format=qcow2"  # Opt disk (20GB)
+      virtio0: "local:50,format=qcow2"  # Root disk (50GB)
+      virtio1: "local:30,format=qcow2"  # Home disk (30GB)
+      virtio2: "local:20,format=qcow2"  # Opt disk (20GB)
     state: present
 
 
