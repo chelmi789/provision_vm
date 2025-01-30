@@ -102,7 +102,7 @@
      vmid: "150"
      disk: "virtio0"
      size: "50"  # Disk size in GB as a string (no units)
-     storage: "local-lvm"  # Use your LVM-thin pool name
+     storage: "local"  # Use your LVM-thin pool name
      format: qcow2  # Optional, default is raw for LVM-thin pools
      state: present
 
@@ -115,7 +115,7 @@
     vmid: "150"
     disk: "virtio1"
     size: "30"
-    storage: "local-lvm"
+    storage: "local"
     format: qcow2
     state: present
 
@@ -127,7 +127,7 @@
     vmid: "150"
     disk: "virtio2"
     size: "20"
-    storage: "local-lvm"
+    storage: "local"
     format: qcow2
     state: present
 
