@@ -65,7 +65,17 @@
    # file_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"  # Path to ISO file in Proxmox
    # media_type: cdrom
    # state: present
-
+- name: Create VM storage pool
+  community.general.proxmox_storage_pools:
+     api_host: "pve-pxs-sm2u-r5-33"
+     api_user: "ansible@pam"
+     api_password: "ixelles1050"
+     name: "vm_storage"
+     type: "lvmthin"
+     content: "images"
+     vgname: "pve"
+     thinpool: "data"
+ 
 - name: Création de la VM
   community.general.proxmox_kvm:
     api_user: "ansible@pam"
