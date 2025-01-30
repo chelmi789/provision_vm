@@ -83,14 +83,14 @@
     scsihw: virtio-scsi-pci
     net:
       net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
-    storage: "local-lvm"
+    storage: "local"
     boot: "order=ide2;virtio0;net0"
     ide:
       ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
     virtio:
-      virtio0: "local-lvm:50G"  # Root disk (50GB)
-      virtio1: "local-lvm:30G"  # Home disk (30GB)
-      virtio2: "local-lvm:20G"  # Opt disk (20GB)
+      virtio0: "local:50G"  # Root disk (50GB)
+      virtio1: "local:30G"  # Home disk (30GB)
+      virtio2: "local:20G"  # Opt disk (20GB)
     state: present
 
 
