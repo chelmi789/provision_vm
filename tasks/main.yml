@@ -87,9 +87,9 @@
        ide:
          ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
        scsi:
-         scsi0: "local-lvm:50G"  # Root disk (50GB)
-         scsi1: "local-lvm:30G"  # Home disk (30GB)
-         scsi2: "local-lvm:20G"  # Opt disk (20GB)
+         scsi0: "local-lvm:50G,iothread=1"  # Root disk (50GB)
+         scsi1: "local-lvm:30G,iothread=1"  # Home disk (30GB)
+         scsi2: "local-lvm:20G,iothread=1"  # Opt disk (20GB)
        state: present
    
 - name: Attendre avant de démarrer la VM
