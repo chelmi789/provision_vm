@@ -48,6 +48,10 @@
       vmid: "151"
   register: vm_info
      
+- name: Afficher le contenu brut de vm_info pour débogage
+  debug:
+    var: vm_info
+    
 - name: Afficher les informations récupérées sur la VM
   debug:
     msg:
