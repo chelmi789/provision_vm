@@ -39,10 +39,25 @@
        vmid: "151"
        state: started
 
+- name: Récupérer les informations sur la VM via Proxmox
+  community.general.proxmox_vm_info:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      node: "{{ proxmox_node }}"
+      vmid_list:
+         - "151"
+  register: vm_info
+     
+- name: Afficher les informations récupérées sur la VM
+  debug:
+    msg:
+      - "{{ vm_info.vms[0].ip }}" # Adresse IP détectée via QEMU Guest Agent.
+
 - name: Attendre que la connexion SSH soit disponible
   ansible.builtin.wait_for_connection:
      timeout: 600       
-
+     
 
    
 - name: Mettre à jour l'ordre de démarrage après installation
