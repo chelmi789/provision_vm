@@ -29,7 +29,7 @@
    
 - name: Attendre avant de démarrer la VM
   ansible.builtin.pause:
-       seconds: 10
+       seconds: 300
    
 - name: Démarrer la VM
   community.general.proxmox_kvm:
