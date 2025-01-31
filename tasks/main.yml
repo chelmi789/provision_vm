@@ -27,9 +27,6 @@
        
        state: present
    
-- name: Attendre avant de démarrer la VM
-  ansible.builtin.pause:
-       seconds: 300
    
 - name: Démarrer la VM
   community.general.proxmox_kvm:
@@ -38,6 +35,10 @@
        api_host: "pve-pxs-sm2u-r5-33"
        vmid: "151"
        state: started
+
+- name: Attendre avant de démarrer la VM
+  ansible.builtin.pause:
+     seconds: 300
    
 - name: Mettre à jour l'ordre de démarrage après installation
   community.general.proxmox_kvm:
