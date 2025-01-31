@@ -1,167 +1,167 @@
 ---
-#- name: Create VM
- # community.general.proxmox_kvm:
-  #  api_user: "ansible@pam"
-   # api_password: "ixelles1050"
-    #api_host: "pve-pxs-sm2u-r5-33"
-    #node: "{{ proxmox_node }}" 
-    #vmid: "200"
-    #name: "vm-ubuntu-24-04"
-    #ostype: l26
-    #cores: "{{ cpu_cores }}"
-    #net:
-     # net0: 'virtio,bridge=vmbr0,tag=508'
-    #memory: "{{ memory }}"
-    #state: present
-
-
-
-
-#- name: Set boot order
- # community.general.proxmox_kvm:
-  #  api_user: "ansible@pam"
-  #  api_password: "ixelles1050"
-  #  api_host: "pve-pxs-sm2u-r5-33"
-  #  vmid: "200"
-  #  node: "pve-pxs-sm2u-r5-33"
-  #  boot: "order=ide2;scsi0;net0"
-
-#- name: Start VM
- # community.general.proxmox_kvm:
-  #  api_user: "ansible@pam"
-   # api_password: "ixelles1050"
-   # api_host: "pve-pxs-sm2u-r5-33"
-   # vmid: "200"
-   # state: started
-   
-
-#- name: Attach root disk to VM
- # community.general.proxmox_disk:
-  #  api_user: "ansible@pam"
-  #  api_password: "ixelles1050"
-  #  api_host: "pve-pxs-sm2u-r5-33"
-  #  vmid: "200"
-  #  disk: "scsi0"
-  #  size: "50000"  # Replace with desired disk size
-  #  storage: "local-lvm"  # Replace with your storage pool
-  #  format: raw
-  #  state: present
-
-#- name: Set VM disk using qm command
- # ansible.builtin.command:
-  #  cmd: qm set 200 --scsi0 local-lvm:50
-  #delegate_to: "pve-pxs-sm2u-r5-33"
-
-
-#- name: Attach ISO as CD-ROM
- # community.general.proxmox_disk:
-  #  api_user: "ansible@pam"
-   # api_password: "ixelles1050"
-   # api_host: "pve-pxs-sm2u-r5-33"
-   # node: "{{ proxmox_node }}"
-   # vmid: "200"
-   # disk: "ide2"
-   # storage: "local"  # Replace with your ISO storage pool
-   # file_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"  # Path to ISO file in Proxmox
-   # media_type: cdrom
-   # state: present
-
- 
-- name: Création de la VM
-  community.general.proxmox_kvm:
-    api_user: "ansible@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    node: "{{ proxmox_node }}"
-    vmid: "151"
-    name: "VM-ubuntu24-04"
-    ostype: l26
-    cores: 4
-    sockets: 2
-    memory: 4096
-    bios: seabios
-    machine: q35
-    scsihw: virtio-scsi-pci
-    net:
-      net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
-    storage: "local-lvm"
-    boot: "order=ide2;virtio0;net0"
-    ide:
-      ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
-    virtio:
-      virtio0: "local:50,format=qcow2"  # Root disk (50GB)
-      virtio1: "local:30,format=qcow2"  # Home disk (30GB)
-      virtio2: "local:20,format=qcow2"  # Opt disk (20GB)
-    state: present
-
-
-- name: Create root disk
-  community.general.proxmox_disk:
-     api_user: "ansible@pam"
-     api_password: "ixelles1050"
-     api_host: "pve-pxs-sm2u-r5-33"
-     vmid: "151"
-     disk: "virtio0"
-     size: "50"  # Disk size in GB as a string (no units)
-     storage: "local"  # Use your LVM-thin pool name
-     format: qcow2  # Optional, default is raw for LVM-thin pools
-     state: present
-
-
-- name: Create home disk
-  community.general.proxmox_disk:
-    api_user: "ansible@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    vmid: "151"
-    disk: "virtio1"
-    size: "30"
-    storage: "local"
-    format: qcow2
-    state: present
-
-- name: Create opt disk
-  community.general.proxmox_disk:
-    api_user: "ansible@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    vmid: "151"
-    disk: "virtio2"
-    size: "20"
-    storage: "local"
-    format: qcow2
-    state: present
-
-- name: Attacher ISO comme lecteur CD-ROM
-  community.general.proxmox_kvm:
-          api_user: "ansible@pam"
-          api_password: "ixelles1050"
-          api_host: "pve-pxs-sm2u-r5-33"
-          node: "{{ proxmox_node }}"
-          vmid: "151"
-          ide:
-            ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
-            state: present
-
-- name: Attendre avant de démarrer la VM
-  ansible.builtin.pause:
-    seconds: 10
-
+  #- name: Create VM
+   # community.general.proxmox_kvm:
+    #  api_user: "ansible@pam"
+     # api_password: "ixelles1050"
+      #api_host: "pve-pxs-sm2u-r5-33"
+      #node: "{{ proxmox_node }}" 
+      #vmid: "200"
+      #name: "vm-ubuntu-24-04"
+      #ostype: l26
+      #cores: "{{ cpu_cores }}"
+      #net:
+       # net0: 'virtio,bridge=vmbr0,tag=508'
+      #memory: "{{ memory }}"
+      #state: present
   
-- name: Démarrer la VM
-  community.general.proxmox_kvm:
-          api_user: "ansible@pam"
-          api_password: "ixelles1050"
-          api_host: "pve-pxs-sm2u-r5-33"
-          vmid: "151"
-          state: started
-
-- name: Mettre à jour l'ordre de démarrage après installation
-  community.general.proxmox_kvm:
-    api_user: "ansible@pam"
-    api_password: "ixelles1050"
-    api_host: "pve-pxs-sm2u-r5-33"
-    node: "{{ proxmox_node }}"
-    vmid: "151"
-    boot: "order=virtio0;net0"  # Boot sur le disque principal après installation
-    state: present
+  
+  
+  
+  #- name: Set boot order
+   # community.general.proxmox_kvm:
+    #  api_user: "ansible@pam"
+    #  api_password: "ixelles1050"
+    #  api_host: "pve-pxs-sm2u-r5-33"
+    #  vmid: "200"
+    #  node: "pve-pxs-sm2u-r5-33"
+    #  boot: "order=ide2;scsi0;net0"
+  
+  #- name: Start VM
+   # community.general.proxmox_kvm:
+    #  api_user: "ansible@pam"
+     # api_password: "ixelles1050"
+     # api_host: "pve-pxs-sm2u-r5-33"
+     # vmid: "200"
+     # state: started
+  
+  
+  #- name: Attach root disk to VM
+   # community.general.proxmox_disk:
+    #  api_user: "ansible@pam"
+    #  api_password: "ixelles1050"
+    #  api_host: "pve-pxs-sm2u-r5-33"
+    #  vmid: "200"
+    #  disk: "scsi0"
+    #  size: "50000"  # Replace with desired disk size
+    #  storage: "local-lvm"  # Replace with your storage pool
+    #  format: raw
+    #  state: present
+  
+  #- name: Set VM disk using qm command
+   # ansible.builtin.command:
+    #  cmd: qm set 200 --scsi0 local-lvm:50
+    #delegate_to: "pve-pxs-sm2u-r5-33"
+  
+  
+  #- name: Attach ISO as CD-ROM
+   # community.general.proxmox_disk:
+    #  api_user: "ansible@pam"
+     # api_password: "ixelles1050"
+     # api_host: "pve-pxs-sm2u-r5-33"
+     # node: "{{ proxmox_node }}"
+     # vmid: "200"
+     # disk: "ide2"
+     # storage: "local"  # Replace with your ISO storage pool
+     # file_path: "iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso"  # Path to ISO file in Proxmox
+     # media_type: cdrom
+     # state: present
+  
+  - name: Création de la VM
+    community.general.proxmox_kvm:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      node: "{{ proxmox_node }}"
+      vmid: "150"
+      name: "VM-ubuntu2404"
+      ostype: l26
+      cores: 4
+      sockets: 2
+      memory: 4096
+      bios: seabios
+      machine: q35
+      scsihw: virtio-scsi-pci
+      net:
+        net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
+      storage: "local-lvm"
+      boot: "order=ide2;virtio0;net0"
+      ide:
+        ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+      virtio:
+        virtio0: "local-lvm:50G"  # Root disk (50GB)
+        virtio1: "local-lvm:30G"  # Home disk (30GB)
+        virtio2: "local-lvm:20G"  # Opt disk (20GB)
+      state: present
+  
+  
+  - name: Create root disk
+    community.general.proxmox_disk:
+       api_user: "ansible@pam"
+       api_password: "ixelles1050"
+       api_host: "pve-pxs-sm2u-r5-33"
+       vmid: "150"
+       disk: "virtio0"
+       size: "50"  # Disk size in GB as a string (no units)
+       storage: "local-lvm"  # Use your LVM-thin pool name
+       format: raw  # Optional, default is raw for LVM-thin pools
+       state: present
+  
+  
+  - name: Create home disk
+    community.general.proxmox_disk:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      vmid: "150"
+      disk: "virtio1"
+      size: "30"
+      storage: "local-lvm"
+      format: raw
+      state: present
+  
+  - name: Create opt disk
+    community.general.proxmox_disk:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      vmid: "150"
+      disk: "virtio2"
+      size: "20"
+      storage: "local-lvm"
+      format: raw
+      state: present
+  
+  - name: Attacher ISO comme lecteur CD-ROM
+    community.general.proxmox_kvm:
+            api_user: "ansible@pam"
+            api_password: "ixelles1050"
+            api_host: "pve-pxs-sm2u-r5-33"
+            node: "{{ proxmox_node }}"
+            vmid: "150"
+            ide:
+              ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+              state: present
+  
+  - name: Attendre avant de démarrer la VM
+    ansible.builtin.pause:
+      seconds: 10
+  
+  
+  - name: Démarrer la VM
+    community.general.proxmox_kvm:
+            api_user: "ansible@pam"
+            api_password: "ixelles1050"
+            api_host: "pve-pxs-sm2u-r5-33"
+            vmid: "150"
+            state: started
+  
+  - name: Mettre à jour l'ordre de démarrage après installation
+    community.general.proxmox_kvm:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      node: "{{ proxmox_node }}"
+      vmid: "150"
+      boot: "order=virtio0;net0"  # Boot sur le disque principal après installation
+      state: present
+ 
