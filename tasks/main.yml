@@ -66,103 +66,52 @@
      # media_type: cdrom
      # state: present
   
-  - name: Création de la VM
-    community.general.proxmox_kvm:
-      api_user: "ansible@pam"
-      api_password: "ixelles1050"
-      api_host: "pve-pxs-sm2u-r5-33"
-      node: "{{ proxmox_node }}"
-      vmid: "151"
-      name: "VM-ubuntu-2404"
-      ostype: l26
-      cores: 4
-      sockets: 2
-      memory: 4096
-      bios: seabios
-      machine: q35
-      scsihw: virtio-scsi-pci
-      net:
-        net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
-      storage: "local-lvm"
-      boot: "order=ide2;virtio0;net0"
-      ide:
-        ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
-      virtio:
-        - size: "50G"  # Root disk (50GB)
-        - size: "30G"  # Home disk (30GB)
-        - size: "20G"  # Opt disk (20GB)
-      state: present
-  
-  
-  - name: Create root disk
-    community.general.proxmox_disk:
+- name: Création de la VM
+  community.general.proxmox_kvm:
+       api_user: "ansible@pam"
+       api_password: "ixelles1050"
+       api_host: "pve-pxs-sm2u-r5-33"
+       node: "{{ proxmox_node }}"
+       vmid: "151"
+       name: "VM-ubuntu-2404"
+       ostype: l26
+       cores: 4
+       sockets: 2
+       memory: 4096
+       bios: seabios
+       machine: q35
+       scsihw: virtio-scsi-pci  # Use VirtIO SCSI controller
+       net:
+         net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
+       storage: "local-lvm"
+       boot: "order=ide2;scsi0;net0"  # Boot order updated for SCSI disk
+       ide:
+         ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+       scsi:
+         scsi0: "local-lvm:50G"  # Root disk (50GB)
+         scsi1: "local-lvm:30G"  # Home disk (30GB)
+         scsi2: "local-lvm:20G"  # Opt disk (20GB)
+       state: present
+   
+- name: Attendre avant de démarrer la VM
+  ansible.builtin.pause:
+       seconds: 10
+   
+- name: Démarrer la VM
+  community.general.proxmox_kvm:
        api_user: "ansible@pam"
        api_password: "ixelles1050"
        api_host: "pve-pxs-sm2u-r5-33"
        vmid: "151"
-       disk: "virtio0"
-       size: "50"  # Disk size in GB as a string (no units)
-       storage: "local-lvm"  # Use your LVM-thin pool name
-       format: qcow2  # Optional, default is raw for LVM-thin pools
-       create: forced
-       state: present
-  
-  
-  - name: Create home disk
-    community.general.proxmox_disk:
-      api_user: "ansible@pam"
-      api_password: "ixelles1050"
-      api_host: "pve-pxs-sm2u-r5-33"
-      vmid: "151"
-      disk: "virtio1"
-      size: "30"
-      storage: "local-lvm"
-      format: raw
-      state: present
-  
-  - name: Create opt disk
-    community.general.proxmox_disk:
-      api_user: "ansible@pam"
-      api_password: "ixelles1050"
-      api_host: "pve-pxs-sm2u-r5-33"
-      vmid: "151"
-      disk: "virtio2"
-      size: "20"
-      storage: "local-lvm"
-      format: raw
-      state: present
-  
-  - name: Attacher ISO comme lecteur CD-ROM
-    community.general.proxmox_kvm:
-            api_user: "ansible@pam"
-            api_password: "ixelles1050"
-            api_host: "pve-pxs-sm2u-r5-33"
-            node: "{{ proxmox_node }}"
-            vmid: "151"
-            ide:
-              ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
-              state: present
-  
-  - name: Attendre avant de démarrer la VM
-    ansible.builtin.pause:
-      seconds: 10
-  
-  
-  - name: Démarrer la VM
-    community.general.proxmox_kvm:
-            api_user: "ansible@pam"
-            api_password: "ixelles1050"
-            api_host: "pve-pxs-sm2u-r5-33"
-            vmid: "151"
-            state: started
-  
-  - name: Mettre à jour l'ordre de démarrage après installation
-    community.general.proxmox_kvm:
-      api_user: "ansible@pam"
-      api_password: "ixelles1050"
-      api_host: "pve-pxs-sm2u-r5-33"
-      node: "{{ proxmox_node }}"
-      vmid: "151"
-      boot: "order=virtio0;net0"  # Boot sur le disque principal après installation
-      state: present
- 
+       state: started
+      
+
+- name: Mettre à jour l'ordre de démarrage après installation
+  community.general.proxmox_kvm:
+     api_user: "ansible@pam"
+     api_password: "ixelles1050"
+     api_host: "pve-pxs-sm2u-r5-33"
+     node: "{{ proxmox_node }}"
+     vmid: "151"
+     boot: "order=scsi0;net0"  # Boot from the main SCSI disk after installation
+     state: present
