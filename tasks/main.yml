@@ -56,7 +56,7 @@
 - name: Vérifier si des informations sur la VM ont été récupérées
   debug:
     msg: "Aucune information récupérée pour la VM {{ vm_id }} sur le nœud {{ proxmox_node }}"
-    when: vm_info is not defined or vm_info.vms | length == 0
+  when: vm_info is not defined or vm_info.vms | length == 0
 
 - name: Afficher les informations récupérées sur la VM
   debug:
