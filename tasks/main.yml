@@ -39,15 +39,16 @@
        vmid: "151"
        state: started
 
-- name: Récupérer les informations sur la VM via Proxmox
-  community.general.proxmox_vm_info:
-      api_user: "ansible@pam"
-      api_password: "ixelles1050"
-      api_host: "pve-pxs-sm2u-r5-33"
-      node: "{{ proxmox_node }}"
-      vmid: "151"
-      validate_certs: false
-  register: vm_info
+- name: Attacher ISO comme lecteur CD-ROM
+  community.general.proxmox_kvm:
+          api_user: "ansible@pam"
+          api_password: "ixelles1050"
+          api_host: "pve-pxs-sm2u-r5-33"
+          node: "{{ proxmox_node }}"
+          vmid: "151"
+          ide:
+            ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+            state: present
      
          
 
