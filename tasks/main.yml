@@ -88,13 +88,11 @@
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
       vmid: "151"
-      state: restarted
-      ignore_errors: yes      
+      state: started
+           
       
 - name: Pause après le redémarrage manuel (si nécessaire)
   ansible.builtin.pause:
         seconds: 60
 
-- name: Vérifier que SSH est disponible après redémarrage
-  ansible.builtin.wait_for_connection:
-        timeout: 300
+
