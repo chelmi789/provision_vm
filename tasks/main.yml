@@ -73,7 +73,7 @@
        api_host: "pve-pxs-sm2u-r5-33"
        node: "{{ proxmox_node }}"
        vmid: "151"
-       name: "VM-ubuntu-2404"
+       name: "VM-ubuntu-qcow2"
        ostype: l26
        cores: 4
        sockets: 2
@@ -85,11 +85,11 @@
          net0: "virtio,bridge=vmbr0,firewall=1,tag=508"
        boot: "order=ide2;scsi0;net0"  # Set boot order with SCSI disk
        ide:
-         ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+         ide2: "proxmox_nrc_nfs_ds02:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
        scsi:
-         scsi0: "local:50,format=qcow2"   # Disque principal (50GB)
-         scsi1: "local:30,format=qcow2"   # Disque secondaire (30GB)
-         scsi2: "local:20,format=qcow2"   # Disque tertiaire (20GB)
+         scsi0: "proxmox_nrc_nfs_ds02:50,format=qcow2"   # Disque principal (50GB)
+         scsi1: "proxmox_nrc_nfs_ds02:30,format=qcow2"   # Disque secondaire (30GB)
+         scsi2: "proxmox_nrc_nfs_ds02:20,format=qcow2"   # Disque tertiaire (20GB)
        
        state: present
    
