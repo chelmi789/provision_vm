@@ -92,3 +92,4 @@
       api_host: "pve-pxs-sm2u-r5-33"
       vmid: "151"
       state: restarted      
+      timeout: 900  # Augmentez le délai d'attente à 15 minutes
