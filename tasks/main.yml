@@ -87,9 +87,9 @@
        ide:
          ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
        scsi:
-         scsi0: "local-lvm:50,format=qcow2"   # Disque principal (50GB)
-         scsi1: "local-lvm:30,format=qcow2"   # Disque secondaire (30GB)
-         scsi2: "local-lvm:20,format=qcow2"   # Disque tertiaire (20GB)
+         scsi0: "local:50,format=qcow2"   # Disque principal (50GB)
+         scsi1: "local:30,format=qcow2"   # Disque secondaire (30GB)
+         scsi2: "local:20,format=qcow2"   # Disque tertiaire (20GB)
        
        state: present
    
