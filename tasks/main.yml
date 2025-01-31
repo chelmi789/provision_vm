@@ -24,9 +24,23 @@
          scsi0: "proxmox_nrc_nfs_ds02:50,format=qcow2"   # Disque principal (50GB)
          scsi1: "proxmox_nrc_nfs_ds02:30,format=qcow2"   # Disque secondaire (30GB)
          scsi2: "proxmox_nrc_nfs_ds02:20,format=qcow2"   # Disque tertiaire (20GB)
-       
        state: present
-   
+
+- name: Attacher ISO comme lecteur CD-ROM
+  community.general.proxmox_kvm:
+        api_user: "ansible@pam"
+        api_password: "ixelles1050"
+        api_host: "pve-pxs-sm2u-r5-33"
+        node: "{{ proxmox_node }}"
+        vmid: "151"
+        ide:
+           ide2: "proxmox_nrc_nfs_ds02:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
+           state: present
+
+
+- name: Attendre avant de démarrer la VM
+  ansible.builtin.pause:
+     seconds: 10
    
 - name: Démarrer la VM
   community.general.proxmox_kvm:
@@ -36,9 +50,7 @@
        vmid: "151"
        state: started
 
-- name: Attendre avant de démarrer la VM
-  ansible.builtin.pause:
-     seconds: 300
+
    
 - name: Mettre à jour l'ordre de démarrage après installation
   community.general.proxmox_kvm:
