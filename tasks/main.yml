@@ -86,17 +86,11 @@
        boot: "order=ide2;scsi0;net0"  # Set boot order with SCSI disk
        ide:
          ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
-       storage: "local-lvm"
-       disks:
-        - size: 50G
-          type: scsi
-          storage: "local-lvm"
-        - size: 30G
-          type: scsi
-          storage: "local-lvm"
-        - size: 20G
-          type: scsi
-          storage: "local-lvm"
+       scsi:
+         scsi0: "local-lvm:50,format=qcow2"   # Disque principal (50GB)
+         scsi1: "local-lvm:30,format=qcow2"   # Disque secondaire (30GB)
+         scsi2: "local-lvm:20,format=qcow2"   # Disque tertiaire (20GB)
+       
        state: present
    
 - name: Attendre avant de démarrer la VM
