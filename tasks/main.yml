@@ -77,6 +77,10 @@
          ide2: none  # Retirer le CD-ROM virtuel
       state: present
 
+- name: Pause après le redémarrage manuel (si nécessaire)
+  ansible.builtin.pause:
+        seconds: 30
+
 # Redémarrer la VM pour appliquer les changements
 - name: Redémarrer la VM avec les nouveaux paramètres
   community.general.proxmox_kvm:
@@ -87,8 +91,6 @@
       state: started
            
       
-- name: Pause après le redémarrage manuel (si nécessaire)
-  ansible.builtin.pause:
-        seconds: 60
+
 
 
