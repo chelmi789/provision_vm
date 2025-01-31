@@ -72,7 +72,7 @@
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
       node: "{{ proxmox_node }}"
-      vmid: "150"
+      vmid: "151"
       name: "VM-ubuntu-2404"
       ostype: l26
       cores: 4
@@ -99,7 +99,7 @@
        api_user: "ansible@pam"
        api_password: "ixelles1050"
        api_host: "pve-pxs-sm2u-r5-33"
-       vmid: "150"
+       vmid: "151"
        disk: "virtio0"
        size: "50"  # Disk size in GB as a string (no units)
        storage: "local-lvm"  # Use your LVM-thin pool name
@@ -113,7 +113,7 @@
       api_user: "ansible@pam"
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
-      vmid: "150"
+      vmid: "151"
       disk: "virtio1"
       size: "30"
       storage: "local-lvm"
@@ -125,7 +125,7 @@
       api_user: "ansible@pam"
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
-      vmid: "150"
+      vmid: "151"
       disk: "virtio2"
       size: "20"
       storage: "local-lvm"
@@ -138,7 +138,7 @@
             api_password: "ixelles1050"
             api_host: "pve-pxs-sm2u-r5-33"
             node: "{{ proxmox_node }}"
-            vmid: "150"
+            vmid: "151"
             ide:
               ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
               state: present
@@ -153,7 +153,7 @@
             api_user: "ansible@pam"
             api_password: "ixelles1050"
             api_host: "pve-pxs-sm2u-r5-33"
-            vmid: "150"
+            vmid: "151"
             state: started
   
   - name: Mettre à jour l'ordre de démarrage après installation
@@ -162,7 +162,7 @@
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
       node: "{{ proxmox_node }}"
-      vmid: "150"
+      vmid: "151"
       boot: "order=virtio0;net0"  # Boot sur le disque principal après installation
       state: present
  
