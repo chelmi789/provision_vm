@@ -26,17 +26,6 @@
          scsi2: "proxmox_nrc_nfs_ds02:20,format=qcow2"   # Disque tertiaire (20GB)
        state: present
 
-- name: Attacher ISO comme lecteur CD-ROM
-  community.general.proxmox_kvm:
-        api_user: "ansible@pam"
-        api_password: "ixelles1050"
-        api_host: "pve-pxs-sm2u-r5-33"
-        node: "{{ proxmox_node }}"
-        vmid: "151"
-        ide:
-           ide2: "proxmox_nrc_nfs_ds02:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
-           state: present
-
 
 - name: Attendre avant de démarrer la VM
   ansible.builtin.pause:
@@ -50,6 +39,10 @@
        vmid: "151"
        state: started
 
+- name: Attendre que la connexion SSH soit disponible
+  ansible.builtin.wait_for_connection:
+     timeout: 600       
+
 
    
 - name: Mettre à jour l'ordre de démarrage après installation
@@ -61,3 +54,26 @@
        vmid: "151"
        boot: "order=scsi0;net0"  # Boot from the main SCSI disk after installation
        state: present
+
+
+ 
+# Détacher l'ISO après installation
+- name: Détacher ISO après installation
+  community.general.proxmox_kvm:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      node: "{{ proxmox_node }}"
+      vmid: "151"
+      ide:
+         ide2: none  # Retirer le CD-ROM virtuel
+      state: present
+
+# Redémarrer la VM pour appliquer les changements
+- name: Redémarrer la VM avec les nouveaux paramètres
+  community.general.proxmox_kvm:
+      api_user: "ansible@pam"
+      api_password: "ixelles1050"
+      api_host: "pve-pxs-sm2u-r5-33"
+      vmid: "151"
+      state: restarted      
