@@ -45,8 +45,7 @@
       api_password: "ixelles1050"
       api_host: "pve-pxs-sm2u-r5-33"
       node: "{{ proxmox_node }}"
-      vmid_list:
-         - "151"
+      vmid: "151"
   register: vm_info
      
 - name: Afficher les informations récupérées sur la VM
