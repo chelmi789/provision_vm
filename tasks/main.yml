@@ -88,9 +88,9 @@
       ide:
         ide2: "local:iso/ubuntu-24.04.1-live-server-amd64-autoinstall.iso,media=cdrom"
       virtio:
-        virtio0: "local-lvm:50G"  # Root disk (50GB)
-        virtio1: "local-lvm:30G"  # Home disk (30GB)
-        virtio2: "local-lvm:20G"  # Opt disk (20GB)
+        - size: "50G"  # Root disk (50GB)
+        - size: "30G"  # Home disk (30GB)
+        - size: "20G"  # Opt disk (20GB)
       state: present
   
   
